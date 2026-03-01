@@ -1,15 +1,15 @@
-import { date, integer, text, pgTable, pgEnum } from "drizzle-orm/pg-core";
+import { date, integer, serial, text, pgTable, pgEnum } from "drizzle-orm/pg-core";
 
 export const statusEnum = pgEnum("status", ["en attente", "acceptée", "refusée"]);
 export const typeEnum = pgEnum("type", ["stage", "alternance"]);
 
-export const user = pgTable("user", {
-  id: integer("id").primaryKey(),
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
   name: text("name").notNull(),
   password: text("password").notNull(),
 });
 
-export const candidature = pgTable("candidature", {
+export const candidatures = pgTable("candidatures", {
   id: integer("id").primaryKey(),
   entreprise: text("entreprise").notNull(),
   poste: text("poste").notNull(),
@@ -18,5 +18,7 @@ export const candidature = pgTable("candidature", {
   date_offer: date("date").notNull(),
   date_candidature: date("date").notNull(),
   lien: text("lien").notNull(),
-  userId: integer("user_id").notNull().references(() => user.id),
+  userId: integer("users_id").notNull().references(() => users.id),
 });
+
+export type User = typeof users.$inferSelect;
