@@ -10,7 +10,7 @@ export const users = pgTable("users", {
 });
 
 export const candidatures = pgTable("candidatures", {
-  id: integer("id").primaryKey(),
+  id: serial("id").primaryKey(),
   entreprise: text("entreprise").notNull(),
   poste: text("poste").notNull(),
   type: typeEnum("type").notNull(),
@@ -22,3 +22,5 @@ export const candidatures = pgTable("candidatures", {
 });
 
 export type User = typeof users.$inferSelect;
+
+export type Candidature = typeof candidatures.$inferSelect;
